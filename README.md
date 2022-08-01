@@ -1,5 +1,5 @@
-## People Invested 
-# Provides a data stream of significant asset buying and selling activity
+# People Invested 
+## Provides a data stream of significant asset buying and selling activity
 - Insider Buys
 - Insider Sells
 - Significant mergers & acquisitions 
