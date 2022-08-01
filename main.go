@@ -3,11 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	var conferenceName = "People Invested"
+	var appName = "People Invested"
 	const activeSubLimit = 50
 	var remainingSubs = 50
 	
-	fmt.Printf("Welcome to the %v data stream\n", conferenceName)
+	fmt.Printf("Welcome to the %v data stream\n", appName)
 	fmt.Printf("We have a limit of %v total subs and %v are still available\n", activeSubLimit, remainingSubs)
 	fmt.Println("Get your access here")
 
