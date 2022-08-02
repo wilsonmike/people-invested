@@ -14,7 +14,7 @@ func main() {
 	var firstName string
 	var lastName string
 	var email string
-	var userSubs int
+	var userSubs uint
 	// ask user for their name
 	fmt.Println("Enter your first name: ")
 	fmt.Scan(&firstName)
@@ -25,6 +25,11 @@ func main() {
 	fmt.Println("Enter your email address: ")
 	fmt.Scan(&email)
 
-	userSubs = 2
-	fmt.Printf("User %v booked %v subs.\n", firstName, userSubs)
+	fmt.Println("How many subscriptions would you like to purchase?: ")
+	fmt.Scan(&userSubs)
+
+	remainingSubs = remainingSubs - userSubs 
+
+	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userSubs, email)
+	fmt.Printf("%v subs remaining for %v\n", remainingSubs, appName)
 }
