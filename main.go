@@ -31,9 +31,7 @@ func main() {
 		fmt.Println("How many subscriptions would you like to purchase?: ")
 		fmt.Scan(&userSubs)
 
-		isValidName := len(firstName) >= 2 && len(lastName) >= 2
-		isValidEmail := strings.Contains(email, "@")
-		isValidSubscription := userSubs > 0 && userSubs <= remainingSubs
+		isValidName, isValidEmail, isValidSubscription := validateUserInput(firstName, lastName, email, userSubs, remainingSubs)
 
 		if isValidName && isValidEmail && isValidSubscription {
 			remainingSubs = remainingSubs - userSubs 
@@ -76,4 +74,11 @@ func getFirstNames(subscriptions []string) []string {
 		firstNames = append(firstNames, names[0])
 	} 
 	return firstNames
+}
+
+func validateUserInput(firstName string, lastName string, email string, userSubs uint, remainingSubs uint) (bool, bool, bool) {
+	isValidName := len(firstName) >= 2 && len(lastName) >= 2
+	isValidEmail := strings.Contains(email, "@")
+	isValidSubscription := userSubs > 0 && userSubs <= remainingSubs
+	return isValidName, isValidEmail, isValidSubscription 
 }
