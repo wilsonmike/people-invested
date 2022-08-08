@@ -11,9 +11,7 @@ func main() {
 	var remainingSubs uint = 50
 	subscriptions := []string{} 
 
-	fmt.Printf("Welcome to the %v data stream\n", appName)
-	fmt.Printf("We have a limit of %v total subs and %v are still available\n", activeSubLimit, remainingSubs)
-	fmt.Println("Get your access here")
+	greetUsers(appName, activeSubLimit, remainingSubs)
 
 	for {
 		var firstName string
@@ -33,24 +31,49 @@ func main() {
 		fmt.Println("How many subscriptions would you like to purchase?: ")
 		fmt.Scan(&userSubs)
 
-		remainingSubs = remainingSubs - userSubs 
-		subscriptions = append(subscriptions, firstName + " " + lastName)
-		
-		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userSubs, email)
-		fmt.Printf("%v subs remaining for %v\n", remainingSubs, appName)
+		isValidName := len(firstName) >= 2 && len(lastName) >= 2
+		isValidEmail := strings.Contains(email, "@")
+		isValidSubscription := userSubs > 0 && userSubs <= remainingSubs
 
-		firstNames := []string{}
-		for _, booking := range subscriptions {
-			var names = strings.Fields(booking)
-			firstNames = append(firstNames, names[0])
-		} 
+		if isValidName && isValidEmail && isValidSubscription {
+			remainingSubs = remainingSubs - userSubs 
+			subscriptions = append(subscriptions, firstName + " " + lastName)
+			
+			fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userSubs, email)
+			fmt.Printf("%v subs remaining for %v\n", remainingSubs, appName)
 
-		fmt.Printf("Thank you to all of our active users: %v\n", firstNames)
-		
-		var noSubsRemaining bool = remainingSubs == 0
-		if noSubsRemaining {
-			fmt.Println("Oops, looks like we are out of available subscriptions this month.")
-			break
+			firstNames := getFirstNames(subscriptions)
+			fmt.Printf("The first names of bookings are: %v\n", firstNames)
+			
+			if remainingSubs == 0 {
+				fmt.Println("Oops, looks like we are out of available subscriptions this month.")
+				break
+			}
+		} else {
+			if !isValidName {
+				fmt.Println("The first name or last name you entered is too short.")
+			}
+			if !isValidEmail {
+				fmt.Println("The email you entered is invalid please re-enter.")
+			}
+			if !isValidSubscription {
+				fmt.Println("The number of subscriptions you entered is invalid.")
+			}
 		}
 	}
+}
+
+func greetUsers(greetAppName string, subTickets int, subRemaining uint) {
+	fmt.Printf("Welcome to %v\n", greetAppName)
+	fmt.Printf("We have a limit of %v total subs and %v are still available\n", subTickets, subRemaining)
+	fmt.Println("Get your access here")
+}
+
+func getFirstNames(subscriptions []string) []string {
+	firstNames := []string{}
+	for _, booking := range subscriptions {
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	} 
+	return firstNames
 }
